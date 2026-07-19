@@ -78,13 +78,35 @@ def stage_from_score(score_1_9):
     return mapping[score_1_9]
 
 
+# Action-phrased next milestones, one per current stage, per scale.
+# The milestone describes what to do to reach the NEXT stage. Stage 5 is terminal.
+TRL_MILESTONES = {
+    1: "Begin applied research and identify the practical applications the technology can serve.",
+    2: "Integrate and test the principal components under conditions representative of the intended application.",
+    3: "Demonstrate a full-scale prototype and prove near-final performance under expected operating conditions.",
+    4: "Operate the final system across the full range of expected conditions to confirm readiness.",
+    5: "Sustain full-scale operation and hold performance as deployment scales.",
+}
+CRL_MILESTONES = {
+    1: "Test commercial feasibility through market research and build the founding team's core capability.",
+    2: "Validate customer requirements, refine the business model, and establish the relationships required to enter the market.",
+    3: "Convert market relationships into supply agreements and secure the company's first customer orders.",
+    4: "Build the operating capabilities and manufacturing readiness to deliver at commercial scale.",
+    5: "Scale commercial operation and broaden deployment across the customer base.",
+}
+
+
 def screen(sliders):
     """Public result: 1-5 stage for TRL and CRL. True scores kept internal."""
     trl9 = true_trl(sliders)
     crl9 = true_crl(sliders)
+    trl_stage = stage_from_score(trl9)
+    crl_stage = stage_from_score(crl9)
     return {
-        "trl_stage": stage_from_score(trl9),
-        "crl_stage": stage_from_score(crl9),
+        "trl_stage": trl_stage,
+        "crl_stage": crl_stage,
+        "trl_milestone": TRL_MILESTONES.get(trl_stage, ""),
+        "crl_milestone": CRL_MILESTONES.get(crl_stage, ""),
         "complete": all(sliders.get(c, 0) >= 1 for c in CATEGORIES),
         # radar uses the raw 1-5 slider positions per category
         "radar": {c: sliders.get(c, 0) for c in CATEGORIES},
