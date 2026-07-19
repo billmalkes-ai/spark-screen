@@ -23,7 +23,7 @@
   header{border-bottom:1px solid var(--hair);padding:22px 0}
   header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
   .brand{display:flex;align-items:center;gap:14px}
-  header img{height:56px;width:auto;display:block}
+  header img{height:74px;width:auto;display:block}
   .brand .bn{font-family:'Space Grotesk';font-weight:700;font-size:1.05rem;letter-spacing:.01em;
     color:var(--slate);line-height:1.1}
   .tagword{font-family:'Space Grotesk';font-weight:600;font-size:.78rem;letter-spacing:.14em;
@@ -126,23 +126,36 @@
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 
   @media print{
-    /* Print only the results. Hide the form, sticky bar, and buttons. */
-    header, .hero, .sectlabel, .sectlabel + p, #quiz, footer, .actions{display:none !important}
-    #results{display:block !important;padding:0}
+    /* Print a complete record: the seven sections with the user's pick marked,
+       then the readiness results. Hide chrome, sticky bar, and buttons. */
+    header, .hero, .sectlabel, .sectlabel + p, footer, .actions, .barwrap{display:none !important}
     body{background:#fff}
     .wrap{max-width:100%;padding:0 8mm}
-    .res-head{margin:0 0 10px}
-    /* keep each block intact across page breaks */
-    .ladder, .radar-card, .footnote{break-inside:avoid;page-break-inside:avoid;
-      box-shadow:none}
+
+    /* Section header for the printed record */
+    #quiz::before{content:"Your answers";display:block;font-family:'Space Grotesk';
+      font-weight:700;font-size:1.5rem;color:var(--slate);margin:0 0 6px}
+    /* Show the form but collapse each section to just the chosen statement */
+    #quiz{display:block !important}
+    .q{border-top:1px solid var(--hair);padding:12px 0;break-inside:avoid;page-break-inside:avoid}
+    .q-head{margin-bottom:6px}
+    .opt{display:none !important}                 /* hide unchosen options */
+    .opt.sel{display:grid !important;border:1px solid var(--orange) !important;
+      background:#fff !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .opt.sel input{display:none}
+    .opt.sel{grid-template-columns:1fr}
+
+    /* Results after the answers */
+    #results{display:block !important;padding:0;margin-top:14px}
+    .res-head{margin:0 0 10px;break-before:page;page-break-before:always}
+    .ladder, .radar-card, .footnote{break-inside:avoid;page-break-inside:avoid;box-shadow:none}
     .ladder{margin:0 0 12px;padding:14px 16px}
     .radar-card{margin:12px 0 0}
-    svg.radar{max-width:440px}
+    svg.radar{max-width:460px}
     .step{border:1px solid #ccc !important;background:#fff !important;
       -webkit-print-color-adjust:exact;print-color-adjust:exact}
     .step.here{box-shadow:0 0 0 2px var(--orange) inset !important}
-    .here-tag{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-    .footnote{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .here-tag, .footnote{-webkit-print-color-adjust:exact;print-color-adjust:exact}
     @page{margin:14mm}
   }
 </style>
@@ -225,7 +238,7 @@
          likely to emerge. Use it to focus your roadmap and commercialization plan. Not every area
          needs to advance at the same pace, but understanding where you stand is essential to
          making sound allocation decisions.</p>
-      <svg class="radar" id="radar" viewBox="0 0 440 400" role="img" aria-label="Readiness profile radar chart"></svg>
+      <svg class="radar" id="radar" viewBox="0 0 520 400" role="img" aria-label="Readiness profile radar chart"></svg>
     </div>
 
     <div class="footnote">
@@ -317,7 +330,7 @@ function buildLadder(scale, stage, labels, descs, milestone){
 
 function buildRadar(payload){
   const svg = document.getElementById('radar');
-  const cx=220, cy=195, R=135, N=CATS.length;
+  const cx=260, cy=200, R=135, N=CATS.length;
   const names=["Technology","Product Dev","Product Def.","Competitive","Team","Go-to-Market","Mfg & Value"];
   let out='';
   // rings
@@ -329,13 +342,18 @@ function buildRadar(payload){
     }
     out+=`<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#E4E8EC" stroke-width="1"/>`;
   }
+  // ring scale numbers 1-5 up the top (12 o'clock) spoke
+  for(let ring=1;ring<=5;ring++){
+    const ny = cy - R*ring/5;
+    out+=`<text x="${cx+5}" y="${ny+4}" font-family="Inter" font-size="10" fill="#9AA4AF" text-anchor="start">${ring}</text>`;
+  }
   // spokes + labels
   for(let i=0;i<N;i++){
     const a=-Math.PI/2 + i*2*Math.PI/N;
     const ex=cx+Math.cos(a)*R, ey=cy+Math.sin(a)*R;
     out+=`<line x1="${cx}" y1="${cy}" x2="${ex}" y2="${ey}" stroke="#E4E8EC" stroke-width="1"/>`;
-    const lx=cx+Math.cos(a)*(R+22), ly=cy+Math.sin(a)*(R+18);
-    let anchor = Math.abs(Math.cos(a))<0.3?'middle':(Math.cos(a)>0?'start':'end');
+    const lx=cx+Math.cos(a)*(R+20), ly=cy+Math.sin(a)*(R+16);
+    let anchor = Math.abs(Math.cos(a))<0.25?'middle':(Math.cos(a)>0?'start':'end');
     out+=`<text x="${lx}" y="${ly+4}" font-family="Inter" font-weight="500" font-size="13" fill="#33445A" text-anchor="${anchor}">${names[i]}</text>`;
   }
   // data polygon
@@ -346,7 +364,7 @@ function buildRadar(payload){
     dp.push([cx+Math.cos(a)*R*v/5, cy+Math.sin(a)*R*v/5]);
   });
   out+=`<polygon points="${dp.map(p=>p.join(',')).join(' ')}" fill="rgba(240,128,0,.18)" stroke="#F08000" stroke-width="2"/>`;
-  dp.forEach(p=>out+=`<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="#F08000"/>`);
+  dp.forEach(p=>out+=`<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="#F08000"/>`);
   svg.innerHTML=out;
 }
 
