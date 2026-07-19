@@ -22,7 +22,10 @@
 
   header{border-bottom:1px solid var(--hair);padding:22px 0}
   header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
-  header img{height:38px;width:auto;display:block}
+  .brand{display:flex;align-items:center;gap:14px}
+  header img{height:56px;width:auto;display:block}
+  .brand .bn{font-family:'Space Grotesk';font-weight:700;font-size:1.05rem;letter-spacing:.01em;
+    color:var(--slate);line-height:1.1}
   .tagword{font-family:'Space Grotesk';font-weight:600;font-size:.78rem;letter-spacing:.14em;
     text-transform:uppercase;color:var(--muted)}
 
@@ -30,7 +33,8 @@
   .hero h1{font-family:'Space Grotesk';font-weight:700;font-size:clamp(2rem,4.6vw,3.1rem);
     line-height:1.04;letter-spacing:-.01em;margin:0 0 14px;color:var(--slate)}
   .hero h1 span{color:var(--orange)}
-  .hero p{font-size:1.06rem;color:var(--slate-2);max-width:60ch;margin:0}
+  .hero p{font-size:1.06rem;color:var(--slate-2);max-width:64ch;margin:0}
+  .hero p.intro{margin:0 0 14px}
   .notes{margin:22px 0 0;padding:14px 16px;background:var(--panel);border:1px solid var(--hair);
     border-radius:10px;font-size:.9rem;color:var(--muted);max-width:70ch}
   .notes b{color:var(--slate-2);font-weight:600}
@@ -82,9 +86,9 @@
   .step[data-b="1"]{background:var(--band1)} .step[data-b="2"]{background:var(--band2)}
   .step[data-b="3"]{background:var(--band3)} .step[data-b="4"]{background:var(--band4)}
   .step[data-b="5"]{background:var(--band5)}
-  .step .n{font-family:'Space Grotesk';font-weight:700;font-size:1.25rem;color:var(--slate-2);opacity:.5}
-  .step .nm{font-family:'Space Grotesk';font-weight:600;font-size:.86rem;color:var(--slate);margin:2px 0 3px}
-  .step .ds{font-size:.76rem;color:var(--muted);line-height:1.3}
+  .step .n{display:block;font-family:'Space Grotesk';font-weight:700;font-size:1.25rem;color:var(--slate-2);opacity:.5;line-height:1}
+  .step .nm{display:block;font-family:'Space Grotesk';font-weight:600;font-size:.86rem;color:var(--slate);margin:6px 0 4px;line-height:1.15}
+  .step .ds{display:block;font-size:.76rem;color:var(--muted);line-height:1.3}
   .step.here{border-color:var(--orange);box-shadow:0 0 0 2px var(--orange) inset}
   .step.here .n{opacity:1;color:var(--orange)}
   .here-tag{position:absolute;top:-11px;left:12px;background:var(--orange);color:#fff;
@@ -93,42 +97,71 @@
   .next{margin-top:16px;font-size:.92rem;color:var(--slate-2)}
   .next b{font-family:'Space Grotesk';color:var(--slate)}
 
-  .grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:start;margin-top:22px}
-  .radar-card{border:1px solid var(--hair);border-radius:14px;padding:20px}
-  .radar-card h3{font-family:'Space Grotesk';font-weight:700;font-size:1.1rem;margin:0 0 2px;color:var(--slate)}
-  .radar-card p{color:var(--muted);font-size:.86rem;margin:0 0 6px}
-  svg.radar{width:100%;height:auto;display:block}
-  .footnote{margin-top:26px;padding:16px 18px;border-left:3px solid var(--orange);
+  .radar-card{border:1px solid var(--hair);border-radius:14px;padding:24px;margin-top:22px}
+  .radar-card h3{font-family:'Space Grotesk';font-weight:700;font-size:1.2rem;margin:0 0 8px;color:var(--slate)}
+  .radar-card p{color:var(--slate-2);font-size:.94rem;margin:0 0 10px;max-width:74ch}
+  svg.radar{width:100%;max-width:560px;height:auto;display:block;margin:8px auto 0}
+  .footnote{margin-top:22px;padding:16px 18px;border-left:3px solid var(--orange);
     background:var(--panel);border-radius:0 10px 10px 0;font-size:.92rem;color:var(--slate-2)}
   .footnote b{color:var(--slate)}
-  .restart{margin-top:22px;background:none;border:1px solid var(--hair);border-radius:8px;
-    padding:10px 18px;font-family:Inter;font-size:.9rem;color:var(--slate-2);cursor:pointer}
+  .actions{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+  .print{font-family:'Space Grotesk';font-weight:600;font-size:.95rem;color:#fff;background:var(--orange);
+    border:0;border-radius:8px;padding:11px 22px;cursor:pointer}
+  .print:active{transform:translateY(1px)}
+  .restart{background:none;border:1px solid var(--hair);border-radius:8px;
+    padding:11px 20px;font-family:Inter;font-size:.92rem;color:var(--slate-2);cursor:pointer}
   .restart:hover{border-color:var(--slate-2)}
 
   footer{border-top:1px solid var(--hair);padding:26px 0;color:var(--muted);font-size:.84rem}
   footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
   @media(max-width:720px){
-    .grid2{grid-template-columns:1fr}
     .steps{grid-template-columns:1fr;gap:6px}
-    .step{min-height:0;display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center}
+    .step{min-height:0;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;padding:12px 14px}
+    .step .n{margin:0}
+    .step .nm{margin:0}
     .step .ds{display:none}
-    .here-tag{position:static;display:inline-block;margin-left:8px}
+    .here-tag{position:static;display:inline-block;margin:0 0 4px}
   }
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+  @media print{
+    /* Print only the results. Hide the form, sticky bar, and buttons. */
+    header, .hero, .sectlabel, .sectlabel + p, #quiz, footer, .actions{display:none !important}
+    #results{display:block !important;padding:0}
+    body{background:#fff}
+    .wrap{max-width:100%;padding:0 8mm}
+    .res-head{margin:0 0 10px}
+    /* keep each block intact across page breaks */
+    .ladder, .radar-card, .footnote{break-inside:avoid;page-break-inside:avoid;
+      box-shadow:none}
+    .ladder{margin:0 0 12px;padding:14px 16px}
+    .radar-card{margin:12px 0 0}
+    svg.radar{max-width:440px}
+    .step{border:1px solid #ccc !important;background:#fff !important;
+      -webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .step.here{box-shadow:0 0 0 2px var(--orange) inset !important}
+    .here-tag{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .footnote{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    @page{margin:14mm}
+  }
 </style>
 </head>
 <body>
 <header><div class="wrap">
-  <img src="/static/spark-logo.png" alt="Spark Innovation Center">
+  <div class="brand"><img src="/static/spark-logo.png" alt="Spark Innovation Center"></div>
   <span class="tagword">Readiness Screen</span>
 </div></header>
 
 <main class="wrap">
   <section class="hero">
     <h1>Where does your company stand on the <span>road to market?</span></h1>
-    <p>A five-minute screen of your technical and commercial readiness. Answer seven
-       short sections and see the stage your company is in today, and what comes next.</p>
+    <p class="intro">Spark Innovation Center accelerates HardTech companies in highly regulated
+       industries toward commercialization. Our companies align with the University of
+       Tennessee's five innovation gateways.</p>
+    <p class="intro">This screen gives founders a quick view of their progress and potential next
+       steps. A full assessment, including regulatory considerations, is completed through our
+       in-program version.</p>
     <div class="notes">
       <b>Nothing is saved.</b> Your answers stay in your browser and are never sent to Spark.
       That means we can't see what you enter, and you can't return to a saved result, so
@@ -183,21 +216,29 @@
       <div class="next" id="crl-next"></div>
     </div>
 
-    <div class="grid2">
-      <div class="radar-card">
-        <h3>Your profile</h3>
-        <p>Your standing across all seven sections. A balanced shape means even progress;
-           a spike means one area is ahead of the others.</p>
-        <svg class="radar" id="radar" viewBox="0 0 320 300" role="img" aria-label="Readiness profile radar chart"></svg>
-      </div>
-      <div class="footnote">
-        <b>This is a screening estimate.</b> The full Spark assessment uses the nine-level
-        Technology Readiness scale and a gated Commercialization Readiness model that accounts
-        for regulatory requirements. That deeper assessment happens inside the program.
-      </div>
+    <div class="radar-card">
+      <h3>Your profile</h3>
+      <p>In early-stage companies, commercialization rarely advances uniformly. A company may
+         have strong technology and still be held back by product definition, customer evidence,
+         team capacity, market access, or manufacturing readiness.</p>
+      <p>This chart shows where your company has built strength and where the next constraint is
+         likely to emerge. Use it to focus your roadmap and commercialization plan. Not every area
+         needs to advance at the same pace, but understanding where you stand is essential to
+         making sound allocation decisions.</p>
+      <svg class="radar" id="radar" viewBox="0 0 440 400" role="img" aria-label="Readiness profile radar chart"></svg>
     </div>
 
-    <button class="restart" id="restart">Start over</button>
+    <div class="footnote">
+      The full Spark assessment evaluates technology readiness across nine levels and
+      commercialization readiness through a gated model that includes regulatory, certification,
+      and qualification requirements. Spark uses the model in the Advanced Energy Accelerator and
+      with SparkSphere alumni companies.
+    </div>
+
+    <div class="actions">
+      <button class="print" id="print">Print your results</button>
+      <button class="restart" id="restart">Start over</button>
+    </div>
   </section>
 </main>
 
@@ -252,14 +293,14 @@ calc.addEventListener('click', async ()=>{
 });
 
 function render(data, payload){
-  buildLadder('trl', data.trl_stage, data.stage_labels, data.stage_descs);
-  buildLadder('crl', data.crl_stage, data.stage_labels, data.stage_descs);
+  buildLadder('trl', data.trl_stage, data.stage_labels, data.stage_descs, data.trl_milestone);
+  buildLadder('crl', data.crl_stage, data.stage_labels, data.stage_descs, data.crl_milestone);
   buildRadar(payload);
   document.getElementById('results').classList.add('on');
   document.getElementById('results').scrollIntoView({behavior:'smooth'});
 }
 
-function buildLadder(scale, stage, labels, descs){
+function buildLadder(scale, stage, labels, descs, milestone){
   const host = document.querySelector(`.steps[data-scale="${scale}"]`);
   host.innerHTML='';
   for(let i=1;i<=5;i++){
@@ -270,19 +311,14 @@ function buildLadder(scale, stage, labels, descs){
       `<span class="ds">${descs[i-1]}</span>`;
     host.appendChild(s);
   }
-  const nextEl = document.getElementById(scale+'-next');
-  if(stage>=5){
-    nextEl.innerHTML = `<b>Next milestone:</b> sustaining and scaling commercial operation.`;
-  }else{
-    nextEl.innerHTML = `<b>Next milestone:</b> ${descs[stage]} `+
-      `(${labels[stage]} stage).`;
-  }
+  document.getElementById(scale+'-next').innerHTML =
+    `<b>Next milestone:</b> ${milestone}`;
 }
 
 function buildRadar(payload){
   const svg = document.getElementById('radar');
-  const cx=160, cy=150, R=105, N=CATS.length;
-  const names=["Technology","Product Dev","Product Def","Competitive","Team","Go-to-Market","Mfg & Value"];
+  const cx=220, cy=195, R=135, N=CATS.length;
+  const names=["Technology","Product Dev","Product Def.","Competitive","Team","Go-to-Market","Mfg & Value"];
   let out='';
   // rings
   for(let ring=1;ring<=5;ring++){
@@ -298,9 +334,9 @@ function buildRadar(payload){
     const a=-Math.PI/2 + i*2*Math.PI/N;
     const ex=cx+Math.cos(a)*R, ey=cy+Math.sin(a)*R;
     out+=`<line x1="${cx}" y1="${cy}" x2="${ex}" y2="${ey}" stroke="#E4E8EC" stroke-width="1"/>`;
-    const lx=cx+Math.cos(a)*(R+16), ly=cy+Math.sin(a)*(R+14);
+    const lx=cx+Math.cos(a)*(R+22), ly=cy+Math.sin(a)*(R+18);
     let anchor = Math.abs(Math.cos(a))<0.3?'middle':(Math.cos(a)>0?'start':'end');
-    out+=`<text x="${lx}" y="${ly+3}" font-family="Inter" font-size="9.5" fill="#6B7683" text-anchor="${anchor}">${names[i]}</text>`;
+    out+=`<text x="${lx}" y="${ly+4}" font-family="Inter" font-weight="500" font-size="13" fill="#33445A" text-anchor="${anchor}">${names[i]}</text>`;
   }
   // data polygon
   let dp=[];
@@ -313,6 +349,8 @@ function buildRadar(payload){
   dp.forEach(p=>out+=`<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="#F08000"/>`);
   svg.innerHTML=out;
 }
+
+document.getElementById('print').addEventListener('click', ()=> window.print());
 
 document.getElementById('restart').addEventListener('click', ()=>{
   form.reset();
